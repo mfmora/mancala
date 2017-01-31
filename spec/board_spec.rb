@@ -66,13 +66,13 @@ describe Board do
 
     it "places stones in the current player's cup" do
       board.make_move(5, "Erica")
-      expect(board.cups[6]).to eq([:stone]) # why are they using this?
+      expect(board.cups[6]).to eq([:stone])
     end
 
     it "doesn't place stones in the opponent's cup" do
       # not a starting move; assumed to be an automatic move after finishing a play on this cup full of stones
       board.make_move(12, "Erica")
-      expect(board.cups[6]).to be_empty # SPEC changed
+      expect(board.cups[13]).to be_empty # SPEC changed
       expect(board.cups[2]).to eq( six_stone_cup )
     end
 

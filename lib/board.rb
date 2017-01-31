@@ -28,14 +28,14 @@ class Board
     position >= 0 && position < @cups.length - 1 && position != 6
   end
 
-  def opponent_cup(from_pos)
-    from_pos < 6 ? 13 : 6
+  def opponent_cup(player_name)
+    player_name == name1 ? 13 : 6
   end
 
   def make_move(start_pos, current_player_name)
     stones = @cups[start_pos].dup
     @cups[start_pos] = []
-    opponent = opponent_cup(start_pos)
+    opponent = opponent_cup(current_player_name)
 
     next_pos = circular_position(start_pos + 1)
     stones.each do |stone|
