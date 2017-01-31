@@ -20,30 +20,34 @@ class Board
     unless in_bounds?(start_pos)
       raise "Invalid starting cup"
     end
+    p start_pos
   end
 
   def in_bounds?(position)
-    position >= 0 && position <= @cups.length - 1
+    position >= 0 && position < @cups.length - 1 && position != 6
+  end
+
+  def opponent_cup(from_pos)
+    from_pos < 6 ? 13 : 6
   end
 
   def make_move(start_pos, current_player_name)
-    debugger
-    stones = @cups[start_pos]
+    stones = @cups[start_pos].dup
     @cups[start_pos] = []
+    opponent = opponent_cup(start_pos)
+
     next_pos = circular_position(start_pos + 1)
     stones.each do |stone|
-      if next_pos == cup_from_position(start_pos)
+      if next_pos == opponent
         next_pos = circular_position(next_pos + 1)
       end
       @cups[next_pos] << stone
       next_pos = circular_position(next_pos + 1)
     end
-    render
-    next_turn(circular_position(next_pos))
-  end
 
-  def cup_from_position(position)
-    position <= 6 ? 7 : 13
+    render
+    last_pos = circular_position(next_pos - 1)
+    next_turn(last_pos)
   end
 
   def circular_position(position)
@@ -51,6 +55,9 @@ class Board
   end
 
   def next_turn(ending_cup_idx)
+    return :prompt if ending_cup_idx == 6 || ending_cup_idx == 13
+    return :switch if @cups[ending_cup_idx].count == 1
+    ending_cup_idx
   end
 
   def render
