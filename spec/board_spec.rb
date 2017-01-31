@@ -72,8 +72,8 @@ describe Board do
     it "doesn't place stones in the opponent's cup" do
       # not a starting move; assumed to be an automatic move after finishing a play on this cup full of stones
       board.make_move(12, "Erica")
-      expect(board.cups[13]).to be_empty # SPEC changed
-      expect(board.cups[2]).to eq( six_stone_cup )
+      expect(board.cups[13]).to be_empty
+      expect(board.cups[3]).to eq( six_stone_cup )
     end
 
     it "calls #render at the end of each turn" do
