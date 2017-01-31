@@ -1,9 +1,10 @@
 require 'byebug'
 class Board
-  attr_accessor :cups
+  attr_accessor :cups, :name1, :name2
 
   def initialize(name1, name2)
     @cups = Array.new(14){Array.new}
+    @name1, @name2 = name1, name2
     place_stones
   end
 
@@ -73,5 +74,7 @@ class Board
   end
 
   def winner
+    return :draw if @cups[6].count == @cups[13].count
+    @cups[6].count > @cups[13].count ? name1 : name2
   end
 end
